@@ -162,12 +162,12 @@ exports.getGameWinners = (req, res) => {
   });
 };
 
-exports.setPhoneNumber = (req, res) => {
-  User.findOne({ email: req.body.email }).exec((foundError, suc) => {
-    if (foundError) {
-      res.send(foundError);
+exports.getAllUsers = (req, res) => {
+  User.find({}).exec((err, success) => {
+    if (err) {
+      res.send(err);
     } else {
-      console.log(User);
+      res.send(success);
     }
   });
-}
+};

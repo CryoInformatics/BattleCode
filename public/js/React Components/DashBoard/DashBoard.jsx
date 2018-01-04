@@ -7,13 +7,20 @@ import Rankings from './Rankings';
 import CompetitionSelect from '../Competition/CompetitionSelect';
 import ReactTelInput from 'react-telephone-input/lib/withStyles';
 import axios from 'axios';
+import db from '../../../../dbTools';
 
 function handleInputChange(telNumber, selectedCountry) {
   if (telNumber.length === 17) {
-    console.log(window.user);
+    axios.get('/getAllUsers').then((foundusers) => {
+
+      const matchedUser = foundusers.data.filter((user) => {
+        return user.username === window.user
+      });
+      
+    });
   }
-  axios.get('/findUserById', { username: window.user } ).then((founduser)=> { console.log(founduser)});
 }
+
 
 function handleInputBlur(telNumber, selectedCountry) {
   console.log('Focus off the ReactTelephoneInput component. Tel number entered is: ', telNumber, ' selected country is: ', selectedCountry);
@@ -37,14 +44,15 @@ const DashBoard = props => (
         </div>
       </Card>
       <div style={{ textAlign: 'center' }}>
-      Enter Phone Number to receive text from BattleCode!
+        Enter Phone Number to receive text from BattleCode!
       <ReactTelInput
-              defaultCountry="us"
-              flagsImagePath='/path/to/images/flags.png'
-              onChange={handleInputChange}
-              onBlur={handleInputBlur}
-    />
-    </div>
+          style={{ position: 'center' }}
+          defaultCountry="us"
+          flagsImagePath='/path/to/images/flags.png'
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
+        />
+      </div>
     </div>
   </MuiThemeProvider >
 );
@@ -52,4 +60,5 @@ const DashBoard = props => (
 DashBoard.propTypes = {
   user: PropTypes.string.isRequired,
 };
+
 export default DashBoard;
