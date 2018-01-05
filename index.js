@@ -93,7 +93,7 @@ const triggerMessages = function () {
 async function run() {
 
   const db = await MongoClient.connect(`mongodb://battlecode:${process.env.DBPW}@ds139067.mlab.com:39067/battlecode`);
-  const agenda = new Agenda().mongo(db, 'users');
+  const agenda = new Agenda().mongo(db, 'jobs');
   agenda.define('sendMessages', () => {
     triggerMessages()();
     process.exit(0);
